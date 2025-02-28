@@ -34,9 +34,22 @@ const protfolioSchema = new mongoose.Schema({
         trim:true,
     }],
     projects:[{
-        type:String,
-        trim:true,
-        required:true,
+        title:{
+            type:String,
+            trim:true,
+            required:true,
+        },
+        description:{
+            type:String,
+            trim:true,
+            required:true,
+        },
+        link:{
+            type:String,
+            trim:true,
+            required:true
+        },
+        required:true
     }],
     sociallinks:[{
         title:{
@@ -49,7 +62,8 @@ const protfolioSchema = new mongoose.Schema({
             type:String,
             required:true,
             trim:true,
-        }
+        },
+        required:true,
     }],
     extracurricularactivities:[{
         type:String,
@@ -104,6 +118,11 @@ const protfolioSchema = new mongoose.Schema({
             trim:true
         },
     }],
+    resume:{
+        type:String,
+        required:true,
+        trim:true
+    },
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",

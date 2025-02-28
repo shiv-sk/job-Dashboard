@@ -16,7 +16,7 @@ const orgSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    sociallinks:[{
+    socialLinks:[{
         title:{
             type:String,
             required:true,
@@ -26,13 +26,19 @@ const orgSchema = new mongoose.Schema({
             type:String,
             required:true,
             trim:true
-        }
+        },
+        required:true
     }],
     industry:{
         type:String,
         required:true,
         trim:true,
         lowercase:true
+    },
+    logo:{
+        type:String,
+        required:true,
+        trim:true,
     },
     user:{
         type:mongoose.Schema.Types.ObjectId,
