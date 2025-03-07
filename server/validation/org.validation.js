@@ -4,7 +4,6 @@ exports.newOrgSchema = Joi.object({
     about:Joi.string().trim().max(500).required(),
     size:Joi.string().trim().required(),
     industry:Joi.string().lowercase().trim().required(),
-    logo:Joi.string().uri().trim().required(),
     user:Joi.string().hex().length(24).trim().required(),
     socialLinks:Joi.array().items(
         Joi.object({
@@ -18,7 +17,6 @@ exports.updateOrgSchema = Joi.object({
     about:Joi.string().trim().max(500),
     size:Joi.string().trim(),
     industry:Joi.string().lowercase().trim(),
-    logo:Joi.string().uri().trim(),
     user:Joi.string().hex().length(24).trim(),
     socialLinks:Joi.array().items(
         Joi.object({

@@ -30,7 +30,7 @@ exports.getJobsByOrg = (async(req , res)=>{
     if(!orgId || !mongoose.Types.ObjectId.isValid(orgId)){
         throw new ApiError(400 , "orgId is empty or inValid! ");
     }
-    const jobs = await Job.find({orgId});
+    const jobs = await Job.find({org:orgId});
     if(jobs.length === 0){
         return res.status(404).json(
             new ApiResponse(404 , "no jobs for the Org! " , {} , "fail")

@@ -16,19 +16,23 @@ const orgSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-    socialLinks:[{
-        title:{
-            type:String,
-            required:true,
-            trim:true
-        },
-        link:{
-            type:String,
-            required:true,
-            trim:true
-        },
-        required:true
-    }],
+    socialLinks:{
+        type:[
+            {
+                title:{
+                    type:String,
+                    required:true,
+                    trim:true
+                },
+                link:{
+                    type:String,
+                    required:true,
+                    trim:true
+                },
+            }
+        ],
+        required:true,
+    },
     industry:{
         type:String,
         required:true,
@@ -43,7 +47,7 @@ const orgSchema = new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User",
-        required:true
+        required:true,
     }
 } , {timestamps:true})
 

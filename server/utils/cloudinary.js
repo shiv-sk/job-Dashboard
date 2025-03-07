@@ -8,6 +8,9 @@ cloudinary.config({
 
 const uploadOnCloudinary = async(path)=>{
     try {
+        if(!path){
+            return null;
+        }
         const uploadedMedia = await cloudinary.uploader.upload(path, {resource_type:"auto"});
         fs.unlinkSync(path);
         return uploadedMedia.secure_url;

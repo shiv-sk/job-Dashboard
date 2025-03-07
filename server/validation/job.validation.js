@@ -1,5 +1,5 @@
 const Joi = require("joi");
-exports.newJob = Joi.object({
+exports.newJobSchema = Joi.object({
     title:Joi.string().trim().required(),
     openings:Joi.number().min(1).required(),
     salary:Joi.number().min(1000).required(),
@@ -10,7 +10,7 @@ exports.newJob = Joi.object({
     locationpreference:Joi.string().trim().valid("On-Site" , "Work-From-Home").default("On-Site").required(),
     org:Joi.string().hex().length(24).required()
 });
-exports.updateJob = Joi.object({
+exports.updateJobSchema = Joi.object({
     title:Joi.string().trim(),
     openings:Joi.number().min(1),
     salary:Joi.number().min(1000),

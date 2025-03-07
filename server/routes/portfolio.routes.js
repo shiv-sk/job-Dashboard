@@ -1,8 +1,22 @@
 const express = require("express");
-const routes = express.Routes();
+const routes = express.Router();
 const portfolioController = require("../controller/portfolio.controller");
-routes.route("/").post(portfolioController.newPortfolio);
+
+const {newProtfolioSchema , updateProtfolioSchema} = require("../validation/portfolio.validation");
+const validateInput = require("../middleware/validation.middleware");
+const parseArrayFields = require("../middleware/parsing.middleware");
+const fieldsToParse = ["skills" , "courses" , "projects" , "sociallinks" , "extracurricularactivities" , 
+    "additionaldetails" , "address" , "experience" , "education"];
+
+const upload = require("../middleware/multer.middleware"); 
+routes.route("/")
+.post(upload.single("resume") , 
+parseArrayFields(fieldsToParse), 
+validateInput(newProtfolioSchema), portfolioController.newPortfolio);
+
 routes.route("/user/myportfolio/:userId").post(portfolioController.getPortfolioByUser);
-routes.route("/:portfolioId").post(portfolioController.deleteProtfolio)
-.patch(portfolioController.updateProtfolio).get(portfolioController.getProtfolio);
-modules.exports = routes;
+routes.route("/:portfolioId")
+.post(portfolioController.deleteProtfolio)
+.patch(upload.single("resume") , parseArrayFields(fieldsToParse), validateInput(newProtfolioSchema), portfolioController.updateProtfolio)
+.get(portfolioController.getProtfolio);
+module.exports = routes;

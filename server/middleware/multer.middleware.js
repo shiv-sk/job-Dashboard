@@ -1,13 +1,14 @@
 const multer  = require('multer');
 const path = require("path");
-const allowedExtension = [];
-const allowedMimeTypes = [];
+const allowedExtension = [".jpeg" , ".jpg" , ".png" , ".gif" , ".webp"];
+const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
 const storage = multer.diskStorage({
     destination:function(req , file , cb){
         cb(null , "./temp/media-uploads");
     },
     filename:function(req , file , cb){
-        cb(null , file.fieldname + Date.now());
+        const extension = path.extname(file.originalname);
+        cb(null , file.fieldname + Date.now() + extension);
     }
 })
 

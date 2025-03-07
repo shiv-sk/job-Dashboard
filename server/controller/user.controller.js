@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 const generateToken = (user)=>{
     try {
-        return jwt.sign({ id: user._id, name: user.name }, process.env.TOKEN_SECRET, { expiresIn: "3d" });
+        return jwt.sign({ id: user._id, name: user.name }, process.env.JWT_SECRET, { expiresIn: "3d" });
     } catch (error) {
         throw new ApiError(500 , "token is not creating");
     }
@@ -20,7 +20,7 @@ exports.currentUser = asyncHandler(async(req , res)=>{
             new ApiResponse("Unauthorized", {} , 401)
         )
     }
-    decodeToken = jwt.verify(token , process.env.TOKEN_SECRET);
+    decodeToken = jwt.verify(token , process.env.JWT_SECRET);
     const user = await User.findById(decodeToken.id).select("-password");
     if(!user){
         throw new ApiError(404 , "user not found! ");
@@ -32,6 +32,17 @@ exports.currentUser = asyncHandler(async(req , res)=>{
 
 //logout user
 exports.logOut = asyncHandler(async(req , res)=>{
+    const token = req.cookies.accessToken;
+    if(!token){
+        return res.status(401).json(
+            new ApiResponse("Unauthorized", {} , 401)
+        )
+    }
+    decodeToken = jwt.verify(token , process.env.JWT_SECRET);
+    const user = await User.findById(decodeToken.id).select("-password");
+    if(!user){
+        throw new ApiError(404 , "user not found! ");
+    }
     const cookieOptions = {
         httpOnly:true,
         secure:true,
@@ -64,7 +75,7 @@ exports.register = asyncHandler(async (req,res)=>{
         user.password = undefined
         
     }
-    const accessToken = generateToken(user);
+    const accessToken = await generateToken(user);
     // console.log("the access token: " , accessToken);
     const options = {
         httpOnly:true,

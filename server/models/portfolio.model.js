@@ -25,54 +25,61 @@ const protfolioSchema = new mongoose.Schema({
     },
     skills:[{
         type:String,
-        required:true,
         trim:true,
-        lowercase:true
+        lowercase:true,
+        required:true
     }],
     courses:[{
         type:String,
         trim:true,
     }],
-    projects:[{
-        title:{
-            type:String,
-            trim:true,
-            required:true,
-        },
-        description:{
-            type:String,
-            trim:true,
-            required:true,
-        },
-        link:{
-            type:String,
-            trim:true,
-            required:true
-        },
-        required:true
-    }],
-    sociallinks:[{
-        title:{
-            type:String,
-            required:true,
-            trim:true,
-            lowercase:true
-        },
-        link:{
-            type:String,
-            required:true,
-            trim:true,
-        },
+    projects:{
+        type:[
+            {
+                title:{
+                    type:String,
+                    trim:true,
+                    required:true,
+                },
+                description:{
+                    type:String,
+                    trim:true,
+                    required:true,
+                },
+                link:{
+                    type:String,
+                    trim:true,
+                    required:true
+                },
+            }
+        ],
         required:true,
-    }],
+    },
+    sociallinks:{
+        type:[
+            {
+                title:{
+                    type:String,
+                    required:true,
+                    trim:true,
+                    lowercase:true
+                },
+                link:{
+                    type:String,
+                    required:true,
+                    trim:true,
+                },
+            }
+        ],
+        required:true,
+    },
     extracurricularactivities:[{
         type:String,
-        required:true,
         trim:true,
+        required:true,
     }],
     additionaldetails:[{
         type:String,
-        required:true,
         trim:true,
     }],
     address:{
@@ -107,15 +114,18 @@ const protfolioSchema = new mongoose.Schema({
     experience:[{
         company:{
             type:String,
-            trim:true
+            trim:true,
+            required:true,
         },
         role:{
             type:String,
-            trim:true
+            trim:true,
+            required:true,
         },
         duration:{
             type:String,
-            trim:true
+            trim:true,
+            required:true,
         },
     }],
     resume:{

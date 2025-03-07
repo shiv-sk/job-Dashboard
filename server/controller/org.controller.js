@@ -5,10 +5,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const uploadOnCloudinary = require("../utils/cloudinary");
 exports.newOrg = asyncHandler(async (req , res)=>{
     const {name , about , size , socialLinks , industry , user} = req.body;
-    if(!req.body || ![name , about , size , socialLinks , industry , user].includes(req.body)){
-        throw new ApiError(400 , "all fields are required! ");
-    }
-    const existOrg = Organization.findOne({$and:[{name} , {user}]});
+    const existOrg = await Organization.findOne({user});
     if(existOrg){
         throw new ApiError(400 , "organization already exist! ");
     }
@@ -16,7 +13,7 @@ exports.newOrg = asyncHandler(async (req , res)=>{
     if(!mediaPath){
         throw new ApiError(500 , "Logo path not found! ");
     }
-    const uploadMedia = uploadOnCloudinary(mediaPath);
+    const uploadMedia = await uploadOnCloudinary(mediaPath);
     if(!uploadMedia){
         throw new ApiError(500 , "Logo is uploaded to cloudinary! ");
     }
@@ -70,7 +67,7 @@ exports.updateOrg = asyncHandler(async(req , res)=>{
     }
     const updatedOrg = await Organization.findByIdAndUpdate(orgId , req.body , {runValidators:true , new:true});
     if(!updatedOrg){
-        throw new ApiError(500 , "changes are effected to Org! ");
+        throw new ApiError(500 , "changes are not effected to Org! ");
     }
     return res.status(200).json(
         new ApiResponse(200 , "updated org is! " , updatedOrg)
