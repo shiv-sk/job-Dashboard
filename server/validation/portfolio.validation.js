@@ -2,21 +2,20 @@ const Joi = require("joi");
 exports.newProtfolioSchema = Joi.object({
     name:Joi.string().min(3).trim().required(),
     email:Joi.string().email().trim().required(),
-    mobilenum:Joi.string().trim().required(),
+    mobilenumber:Joi.string().trim().required(),
     careerobjective:Joi.string().min(10).max(300).trim().required(),
     skills:Joi.array().items(Joi.string().min(1).trim().lowercase()).min(1).required(),
-    extracurricularactivities:Joi.array().items(Joi.string().min(1).trim()).min(1).required(),
-    additionaldetails:Joi.array().min(1).items(Joi.string().min(1).trim()).required(),
+    courses:Joi.array().items(Joi.string().min(1).trim().lowercase()).min(1).optional(),
+    extracurricularactivities:Joi.array().items(Joi.string().min(1).trim()).min(1),
     projects:Joi.array().items(
         Joi.object({
             title:Joi.string().min(3).max(150).trim().required(),
-            description:Joi.string().min(3).max(250).trim().required(),
             link:Joi.string().min(3).uri().trim().required(),
         }).required()
     ).required(),
     sociallinks:Joi.array().items(
         Joi.object({
-            title:Joi.string().min(3).max(150).lowercase().trim().required(),
+            socialmedia:Joi.string().min(3).max(150).lowercase().trim().required(),
             link:Joi.string().min(3).uri().trim().required(),
         }).required()
     ).required(),
@@ -31,28 +30,28 @@ exports.newProtfolioSchema = Joi.object({
         Joi.object({
             company:Joi.string().min(3).max(150).trim().optional(),
             role:Joi.string().min(3).max(100).trim().optional(),
-            duration:Joi.string().min(3).max(150).trim().optional(),
+            years:Joi.string().min(1).max(3).trim().optional(),
         }).optional()
     ),
     address:Joi.object({
         city:Joi.string().trim().max(200).required(),
         state:Joi.string().trim().max(200).required(),
+        country:Joi.string().trim().max(200).required(),
     }).required(),
-    resume:Joi.string().trim().uri().required(),
-    user:Joi.string().trim().hex().length(24).required(),
+    userId:Joi.string().trim().hex().length(24).required(),
 })
 exports.updateProtfolioSchema = Joi.object({
     name:Joi.string().min(3).trim(),
     email:Joi.string().email().trim(),
-    mobilenum:Joi.string().max(10).trim(),
+    mobilenumber:Joi.string().max(10).trim(),
     careerobjective:Joi.string().min(10).max(300).trim(),
     skills:Joi.array().items(Joi.string().min(1).trim().lowercase()).min(1),
+    courses:Joi.array().items(Joi.string().min(1).trim().lowercase()).min(1),
     extracurricularactivities:Joi.array().items(Joi.string().min(1).trim()).min(1),
     additionaldetails:Joi.array().items(Joi.string().min(1).trim()).min(1),
     projects:Joi.array().items(
         Joi.object({
-            title:Joi.string().min(3).max(150).trim(),
-            description:Joi.string().min(3).max(250).trim(),
+            socialmedia:Joi.string().min(3).max(150).trim(),
             link:Joi.string().min(3).uri().trim(),
         })
     ).optional(),
@@ -73,13 +72,13 @@ exports.updateProtfolioSchema = Joi.object({
         Joi.object({
             company:Joi.string().min(3).max(150).trim().optional(),
             role:Joi.string().min(3).max(100).trim().optional(),
-            duration:Joi.string().min(3).max(150).trim().optional(),
+            years:Joi.string().min(1).max(3).trim().optional(),
         })
     ).optional(),
     address:Joi.object({
         city:Joi.string().trim().max(200),
         state:Joi.string().trim().max(200),
+        country:Joi.string().trim().max(200),
     }).optional(),
-    resume:Joi.string().trim().uri().max(200),
-    user:Joi.string().trim().hex().length(24),
+    userId:Joi.string().trim().hex().length(24),
 }).min(1);

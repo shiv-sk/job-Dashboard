@@ -1,7 +1,7 @@
 const multer  = require('multer');
 const path = require("path");
-const allowedExtension = [".jpeg" , ".jpg" , ".png" , ".gif" , ".webp"];
-const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
+const allowedExtension = [".jpeg" , ".jpg" , ".png" , ".gif" , ".webp" , ".pdf"];
+const allowedMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp" , "application/pdf"];
 const storage = multer.diskStorage({
     destination:function(req , file , cb){
         cb(null , "./temp/media-uploads");

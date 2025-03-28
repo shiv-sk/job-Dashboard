@@ -12,7 +12,7 @@ export default function Home(){
                     <button>apply</button>
                 </div>
                 <div className="w-full md:w-1/2 flex flex-wrap gap-4 overflow-auto">
-                    <div className="card card-dash bg-gray-900 w-96">
+                    <div className="card card-dash bg-gray-900">
                         <div className="card-body">
                             <h2 className="card-title">Card Title</h2>
                             <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
@@ -21,7 +21,7 @@ export default function Home(){
                             </div>
                         </div>
                     </div>
-                    <div className="card card-dash bg-gray-900 w-96">
+                    <div className="card card-dash bg-gray-900">
                         <div className="card-body">
                             <h2 className="card-title">Card Title</h2>
                             <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
@@ -30,7 +30,7 @@ export default function Home(){
                             </div>
                         </div>
                     </div>
-                    <div className="card card-dash bg-gray-900 w-96">
+                    <div className="card card-dash bg-gray-900">
                         <div className="card-body">
                             <h2 className="card-title">Card Title</h2>
                             <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>

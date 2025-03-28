@@ -5,10 +5,10 @@ const ApiResponse = require("../utils/apiResponse");
 const asyncHandler = require("../utils/asyncHandler");
 
 exports.newJob = asyncHandler(async (req , res)=>{
-    const {title , requiredskills , openings , description , salary , location , jobtype , locationpreference , org} = req.body;
+    const {title , requiredSkills , openings , description , salary , location , jobtype , locationpreference , org} = req.body;
     const job = await Job.create({
         title,
-        requiredskills,
+        requiredSkills,
         openings,
         description,
         salary,

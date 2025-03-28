@@ -12,7 +12,7 @@ const protfolioSchema = new mongoose.Schema({
         lowercase:true,
         unique:true,
     },
-    mobilenum:{
+    mobilenumber:{
         type:String,
         required:true,
         trim:true,
@@ -41,11 +41,6 @@ const protfolioSchema = new mongoose.Schema({
                     trim:true,
                     required:true,
                 },
-                description:{
-                    type:String,
-                    trim:true,
-                    required:true,
-                },
                 link:{
                     type:String,
                     trim:true,
@@ -58,7 +53,7 @@ const protfolioSchema = new mongoose.Schema({
     sociallinks:{
         type:[
             {
-                title:{
+                socialmedia:{
                     type:String,
                     required:true,
                     trim:true,
@@ -76,11 +71,6 @@ const protfolioSchema = new mongoose.Schema({
     extracurricularactivities:[{
         type:String,
         trim:true,
-        required:true,
-    }],
-    additionaldetails:[{
-        type:String,
-        trim:true,
     }],
     address:{
         city:{
@@ -92,7 +82,12 @@ const protfolioSchema = new mongoose.Schema({
             type:String,
             required:true,
             trim:true
-        }
+        },
+        country:{
+            type:String,
+            required:true,
+            trim:true
+        },
     },
     education:[{
         degree:{
@@ -122,7 +117,7 @@ const protfolioSchema = new mongoose.Schema({
             trim:true,
             required:true,
         },
-        duration:{
+        years:{
             type:String,
             trim:true,
             required:true,

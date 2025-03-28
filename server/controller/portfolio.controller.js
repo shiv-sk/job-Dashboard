@@ -6,8 +6,9 @@ const uploadOnCloudinary = require("../utils/cloudinary");
 const ApiResponse = require("../utils/apiResponse");
 
 exports.newPortfolio = asyncHandler(async(req , res)=>{
-    const {name , email , mobilenum , careerobjective , skills , courses , projects , userId , 
-        sociallinks , extracurricularactivities , additionaldetails , address , education , experience , resume} = req.body;
+    const {name , email , mobilenumber , careerobjective , skills , courses , projects , userId , 
+        sociallinks , extracurricularactivities , additionaldetails , address , education , experience} = req.body;
+    console.log(req.body);
     const existPortfolio = await Portfolio.findOne({$and:[{user:userId} , {email}]} );
     if(existPortfolio){
         throw new ApiError(400 , "portfolio already exists! ");
@@ -24,7 +25,7 @@ exports.newPortfolio = asyncHandler(async(req , res)=>{
     const portfolio = await Portfolio.create({
         name,
         email,
-        mobilenum,
+        mobilenumber,
         careerobjective,
         skills,
         courses,
@@ -36,7 +37,7 @@ exports.newPortfolio = asyncHandler(async(req , res)=>{
         address,
         education,
         experience,
-        resume
+        resume:uploadedMedia
     });
 
     if(!portfolio){

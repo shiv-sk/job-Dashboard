@@ -5,7 +5,7 @@ const jobSchema = new mongoose.Schema({
         required:true,
         trim:true
     },
-    requiredskills:[{
+    requiredSkills:[{
         type:String,
         required:true,
         trim:true

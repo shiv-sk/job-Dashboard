@@ -26,7 +26,7 @@ exports.currentUser = asyncHandler(async(req , res)=>{
         throw new ApiError(404 , "user not found! ");
     }
     return res.status(200).json(
-        new ApiResponse("the user is! " , user , 200)
+        new ApiResponse(200 , "current user is!" , user)
     )
 })
 

@@ -14,6 +14,12 @@ import AppliedApplications from './pages/AppliedApplications.jsx'
 import JobDetail from './pages/JobDetail.jsx'
 import JobsByOrg from './pages/JobsByOrg.jsx'
 import ViewApplications from './pages/ViewApplications.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
+import { OrgProvider } from './context/OrgContext.jsx'
+import { PortfolioProvider } from './context/PortfolioContext.jsx'
+import { JobProvider } from "./context/JobContext.jsx"
+import { SaveJobProvider } from './context/SaveJobContext.jsx'
+import { ApplicationProvider } from "./context/ApplicationContext.jsx"
 
 const router = createBrowserRouter([
   {
@@ -70,8 +76,20 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}>
-    <App />
-    </RouterProvider>
+    <AuthProvider>
+      <OrgProvider>
+        <PortfolioProvider>
+          <JobProvider>
+            <SaveJobProvider>
+              <ApplicationProvider>
+                <RouterProvider router={router}>
+                  <App />
+                </RouterProvider>
+              </ApplicationProvider>
+            </SaveJobProvider>
+          </JobProvider>
+        </PortfolioProvider>
+      </OrgProvider>
+    </AuthProvider>
   </StrictMode>,
 )
