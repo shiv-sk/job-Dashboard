@@ -14,6 +14,7 @@ const ApplicationProvider = ({children})=>{
 
     const newApplication = async(data)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/application/` , "post" , data);
             // console.log("the response AuhtContext! " , response);
@@ -29,6 +30,7 @@ const ApplicationProvider = ({children})=>{
     }
     const deleteApplication = async(applicationId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await getAndDeleteReq(`${baseUrl}/application/${applicationId}` , "delete");
             // console.log("response from AuthContext! " , response?.data);
@@ -44,6 +46,7 @@ const ApplicationProvider = ({children})=>{
     }
     const getApplicationOfUser = async(userId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/application/user/get/${userId}` , "get");
             // console.log("response from AuthContext! " , response?.data);
@@ -59,6 +62,7 @@ const ApplicationProvider = ({children})=>{
     }
     const getApplicationsByJob = async(jobId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/application/job/${jobId}` , "get");
             // console.log("response from AuthContext! " , response?.data);

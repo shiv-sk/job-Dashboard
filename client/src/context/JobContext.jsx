@@ -5,7 +5,7 @@ const JobContext = createContext({
     user:null,
     newJob:()=>{},
     getJobsByOrg:()=>{},
-    allJobs:()=>{},
+    getAllJobs:()=>{},
     getJob:()=>{},
     updateJob:()=>{},
     deleteJob:()=>{},
@@ -17,6 +17,7 @@ const JobProvider = ({children})=>{
 
     const newJob = async(data)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/job/` , "post" , data);
             // console.log("the response AuhtContext! " , response);
@@ -32,6 +33,7 @@ const JobProvider = ({children})=>{
     }
     const getJobsByOrg = async(orgId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await getAndDeleteReq(`${baseUrl}/job/org/${orgId}` , "get");
             // console.log("response from AuthContext! " , response?.data);
@@ -47,6 +49,7 @@ const JobProvider = ({children})=>{
     }
     const getAllJobs = async()=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await getAndDeleteReq(`${baseUrl}/job/` , "get");
             // console.log("response from AuthContext! " , response?.data);
@@ -62,6 +65,7 @@ const JobProvider = ({children})=>{
     }
     const editJob = async(data , jobId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/job/${jobId}` , "patch" , data);
             // console.log("response from AuthContext! " , response?.data);
@@ -77,6 +81,7 @@ const JobProvider = ({children})=>{
     }
     const getJob = async(jobId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/job/${jobId}` , "get");
             // console.log("response from AuthContext! " , response?.data);
@@ -92,6 +97,7 @@ const JobProvider = ({children})=>{
     }
     const deleteJob = async(jobId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/job/${jobId}` , "delete");
             // console.log("response from AuthContext! " , response?.data);

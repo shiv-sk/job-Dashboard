@@ -17,8 +17,8 @@ exports.newSaveJob = asyncHandler(async(req , res)=>{
     if(!savedJob){
         throw new ApiError(500 , "job is not saved! ");
     }
-    return res.status(200).json(
-        new ApiResponse(200 , "savedJob is! " , savedJob)
+    return res.status(201).json(
+        new ApiResponse(201 , "savedJob is! " , savedJob)
     )
 })
 

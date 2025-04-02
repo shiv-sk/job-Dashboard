@@ -14,6 +14,7 @@ const SaveJobProvider = ({children})=>{
 
     const newSaveJob = async(data)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await postAndPatchReq(`${baseUrl}/savejob/` , "post" , data);
             // console.log("the response AuhtContext! " , response);
@@ -29,6 +30,7 @@ const SaveJobProvider = ({children})=>{
     }
     const getSavedJobByUser = async(userId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await getAndDeleteReq(`${baseUrl}/savejob/user/${userId}` , "get");
             // console.log("response from AuthContext! " , response?.data);
@@ -44,6 +46,7 @@ const SaveJobProvider = ({children})=>{
     }
     const deleteSaveJob = async(saveJobId)=>{
         try {
+            setError(null);
             setIsLoading(true);
             const response = await getAndDeleteReq(`${baseUrl}/savejob/${saveJobId}` , "delete");
             // console.log("response from AuthContext! " , response?.data);

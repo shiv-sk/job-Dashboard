@@ -92,7 +92,8 @@ export default function Portfolio(){
         else if(!response.success){
             throw new Error(error);
         }
-    } 
+    }
+     
     return(
         <div className="flex items-center justify-center min-h-screen bg-gray-900 py-5">
             <form className="flex flex-col gap-4 bg-gray-800 p-6 rounded-lg shadow-md w-96" onSubmit={handleOnSubmit}>

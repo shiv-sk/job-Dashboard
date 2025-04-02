@@ -10,7 +10,7 @@ const applicationSchema = new mongoose.Schema({
         ref:"Job",
         required:true
     },
-    protfolio:{
+    portfolio:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Protfolio",
         required:true

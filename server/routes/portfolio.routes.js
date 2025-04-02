@@ -14,7 +14,7 @@ routes.route("/")
 parseArrayFields(fieldsToParse), 
 validateInput(newProtfolioSchema), portfolioController.newPortfolio);
 
-routes.route("/user/myportfolio/:userId").post(portfolioController.getPortfolioByUser);
+routes.route("/user/myportfolio/:userId").get(portfolioController.getPortfolioByUser);
 routes.route("/:portfolioId")
 .delete(portfolioController.deleteProtfolio)
 .patch(upload.single("resume") , parseArrayFields(fieldsToParse), validateInput(newProtfolioSchema), portfolioController.updateProtfolio)

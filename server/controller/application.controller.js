@@ -2,12 +2,10 @@ const Application = require("../models/application.model");
 const ApiError = require("../utils/apiError");
 const ApiResponse = require("../utils/apiResponse");
 const asyncHandler = require("../utils/asyncHandler");
+const mongoose = require("mongoose");
 
 exports.newApplication = asyncHandler(async(req , res)=>{
-    const {userId , protfolioId , jobId} = req.body;
-    if(!userId || !protfolioId || !jobId){
-        throw new ApiError(400 , "userId or protfolioId or jobId is invalid or missing! ");
-    }
+    const {userId , portfolioId , jobId} = req.body;
     const existApplication = await Application.findOne({$and:[{user:userId} , {job:jobId}]});
     if(existApplication){
         return res.status(400).json(
@@ -17,7 +15,7 @@ exports.newApplication = asyncHandler(async(req , res)=>{
     const application = await Application.create({
         user:userId,
         job:jobId,
-        protfolio:protfolioId,
+        portfolio:portfolioId,
     })
     if(!application){
         throw new ApiError(500 , "application is not created! ");
@@ -48,7 +46,8 @@ exports.getApplicationsByJob = asyncHandler(async(req , res)=>{
     if(!jobId || !mongoose.Types.ObjectId.isValid(jobId)){
         throw new ApiError(400 , "jobId is invalid or missing! ");
     }
-    const applications = await Application.find({job:jobId});
+    const applications = await Application.find({job:jobId})
+    .populate([{path:"user" , select:"name email"}]);
     if(applications.length === 0){
         return res.status(404).json(
             new ApiResponse(404 , "no applications for job! " , {} , "fail")

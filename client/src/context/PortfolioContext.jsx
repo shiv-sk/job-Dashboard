@@ -1,5 +1,6 @@
-import { createContext, useContext , useState } from "react";
+import { createContext, useContext , useEffect, useState } from "react";
 import {baseUrl, getAndDeleteReq, postAndPatchReq} from "../apliCalls/apiCalls";
+import { useAuth } from "./AuthContext";
 
 const PortfolioContext = createContext({
     newPortfolio:()=>{},
@@ -10,9 +11,27 @@ const PortfolioContext = createContext({
 })
 const usePortfolio = ()=>useContext(PortfolioContext);
 const PortfolioProvider = ({children})=>{
+    const {user} = useAuth();
     const [error , setError] = useState(false);
     const [isLoading , setIsLoading] = useState(false);
+    const [portfolio , setPortfolio] = useState(null);
 
+    useEffect(()=>{
+        const fetchPortfolio = async()=>{
+            if(!user || !user._id){
+                return;
+            }
+            const response = await getPortfolioByUser(user?._id);
+            if(response.success){
+                // console.log(response);
+                setPortfolio(response?.data);
+            }
+            else{
+                console.log("got an error! " , error);
+            }
+        }
+        fetchPortfolio();
+    } , [user , error])
     const newPortfolio = async(data)=>{
         try {
             setError(null);
@@ -65,7 +84,7 @@ const PortfolioProvider = ({children})=>{
         try {
             setError(null);
             setIsLoading(true);
-            const response = await postAndPatchReq(`${baseUrl}/portfolio/myportfolio/${userId}` , "get");
+            const response = await postAndPatchReq(`${baseUrl}/portfolio/user/myportfolio/${userId}` , "get");
             // console.log("response from AuthContext! " , response?.data);
             return { success: true, data: response?.data };
         } catch (error) {
@@ -95,7 +114,7 @@ const PortfolioProvider = ({children})=>{
     }
     return(
         <PortfolioContext.Provider value={{newPortfolio , getPortfolio , deletePortfolio , editPortfolio , 
-        getPortfolioByUser , error , isLoading}}>
+        getPortfolioByUser , error , isLoading , portfolio}}>
             {children}
         </PortfolioContext.Provider>
     )
