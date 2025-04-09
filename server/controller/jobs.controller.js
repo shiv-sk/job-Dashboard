@@ -58,7 +58,7 @@ exports.getJob = asyncHandler(async(req , res)=>{
     if(!jobId || !mongoose.Types.ObjectId.isValid(jobId)){
         throw new ApiError(400 , "jobId is missing or inValid! ");
     }
-    const job = await Job.findById(jobId);
+    const job = await Job.findById(jobId).populate("org" , "name about");
     if(!job){
         return res.status(404).json(
             new ApiResponse(404 , "no job found! " , {} , "fail")

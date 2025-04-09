@@ -20,6 +20,7 @@ import { PortfolioProvider } from './context/PortfolioContext.jsx'
 import { JobProvider } from "./context/JobContext.jsx"
 import { SaveJobProvider } from './context/SaveJobContext.jsx'
 import { ApplicationProvider } from "./context/ApplicationContext.jsx"
+import ExpPage from './exp/Exp.jsx'
 
 const router = createBrowserRouter([
   {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path:"job/:jobId",
         element:<JobDetail/>,
+      },
+      {
+        path:"exp",
+        element:<ExpPage/>,
       },
     ]
   },

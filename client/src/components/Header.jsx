@@ -1,4 +1,8 @@
+import { useAuth } from "../context/AuthContext"
+import {Link} from "react-router-dom";
+
 export default function NavBar(){
+    const { user , logoutUser } = useAuth();
     return(
         <div className="navbar bg-orange-500 shadow-sm">
             <div className="navbar-start">
@@ -25,7 +29,10 @@ export default function NavBar(){
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn bg-base-300 font-bold">Button</a>
+                {
+                    user ? (<button className="btn bg-base-300 font-bold" onClick={logoutUser}>Logout</button>) 
+                    : (<Link to={"/register"}><button className="btn bg-base-300 font-bold">Register/Login</button></Link>)
+                }
             </div>
         </div>
     )

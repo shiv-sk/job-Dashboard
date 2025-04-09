@@ -36,7 +36,7 @@ export default function Home(){
         
     }
     return(
-        <div className="flex flex-col items-center py-5">
+        <div className="flex flex-col items-center py-5 min-h-screen">
             <div className="w-full max-w-md flex gap-2 mb-4">
                 <input
                 name="search" 

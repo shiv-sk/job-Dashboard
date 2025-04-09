@@ -27,7 +27,7 @@ exports.getSavedJobByUser = asyncHandler(async(req , res)=>{
     if(!userId || !mongoose.Types.ObjectId.isValid(userId)){
         throw new ApiError(400 , "userId is invalid or missing! ");
     }
-    const savedJobs = await SaveJob.find({user:userId});
+    const savedJobs = await SaveJob.find({user:userId}).populate("job" , "location salary jobtype locationpreference title");
     if(savedJobs.length === 0){
         return res.status(404).json(
             new ApiResponse(404 , "no saved jobs for user! " , {} , "fail")

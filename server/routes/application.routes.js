@@ -7,4 +7,7 @@ routes.route("/").post(validateInput(applicationSchema) , applicationController.
 routes.route("/:applicationId").delete(applicationController.deleteApplication);
 routes.route("/job/:jobId").get(applicationController.getApplicationsByJob);
 routes.route("/user/get/:userId").get(applicationController.getApplicationsOfUser);
+
+//aggregation routes
+routes.route("/application/received/:jobId").get(applicationController.totalApplicationsRecevied);
 module.exports = routes;

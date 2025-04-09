@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useApplication } from "../context/ApplicationContext"
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useJob } from "../context/JobContext";
 
 export default function ViewApplications(){
@@ -46,7 +46,7 @@ export default function ViewApplications(){
                             <h2 className="card-title">{application.user.email}</h2>
                             <span>AppliedOn :Date</span>
                             <div className="card-actions justify-end">
-                            <button className="btn bg-orange-500 hover:bg-orange-600">Profile</button>
+                            <Link><button className="btn bg-orange-500 hover:bg-orange-600">Profile</button></Link>
                             </div>
                         </div>
                     </div>
