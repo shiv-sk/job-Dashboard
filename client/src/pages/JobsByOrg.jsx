@@ -24,7 +24,7 @@ export default function JobsByOrg(){
         fetchJobs();
     } , [org , error])
     return(
-        <div className="flex flex-col gap-4 items-center bg-gray-900 py-5">
+        <div className="flex flex-col gap-4 items-center bg-gray-900 py-5 min-h-screen">
             {
                 isLoading ? "Loading......" :
                 jobs && jobs.length > 0 ? jobs.map((job)=>(

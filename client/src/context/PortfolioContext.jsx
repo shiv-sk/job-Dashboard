@@ -31,7 +31,7 @@ const PortfolioProvider = ({children})=>{
             }
         }
         fetchPortfolio();
-    } , [user , error])
+    } , [user])
     const newPortfolio = async(data)=>{
         try {
             setError(null);

@@ -34,19 +34,22 @@ export default function ViewApplications(){
     return(
         <div className="flex flex-col items-center bg-gray-900 gap-4 py-5">
             <h3 className="font-semibold text-lg">Job: {job ? job.title : "Job-Title"}</h3>
-            <div className="flex items-center justify-end w-full max-w-md">
-            <button className="btn bg-orange-500 hover:bg-orange-600">Stats</button>
+            <div className="flex items-center justify-between w-full max-w-md">
+                <h3>View Application's</h3>
+                <button className="btn bg-orange-500 hover:bg-orange-600">Stats</button>
             </div>
             {
                 isLoading ? "Loading....." :
                 applications && applications.length > 0 ? applications.map((application)=>(
                     <div className="card card-border bg-gray-900 max-w-md w-full shadow-lg" key={application._id}>
                         <div className="card-body">
-                            <h2 className="card-title">{application.user.name}</h2>
-                            <h2 className="card-title">{application.user.email}</h2>
+                            <h2 className="card-title">{application.user?.name}</h2>
+                            <h2 className="card-title">{application.user?.email}</h2>
                             <span>AppliedOn :Date</span>
                             <div className="card-actions justify-end">
-                            <Link><button className="btn bg-orange-500 hover:bg-orange-600">Profile</button></Link>
+                            <Link to={`/applied/user/portfolio/${application?.portfolio}`}>
+                            <button className="btn bg-orange-500 hover:bg-orange-600">Profile</button>
+                            </Link>
                             </div>
                         </div>
                     </div>

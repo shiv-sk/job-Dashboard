@@ -65,11 +65,12 @@ exports.getPortfolioByUser = asyncHandler(async(req , res)=>{
 })
 
 exports.getProtfolio = asyncHandler(async(req , res)=>{
-    const {protfolioId} = req.params;
-    if(!protfolioId || !mongoose.Types.ObjectId.isValid(protfolioId)){
+    const {portfolioId} = req.params;
+    console.log("protfolioId is " , portfolioId);
+    if(!portfolioId || !mongoose.Types.ObjectId.isValid(portfolioId)){
         throw new ApiError(400 , "protfolioId is empty or inValid! ");
     }
-    const portfolio = await Portfolio.findById(protfolioId);
+    const portfolio = await Portfolio.findById(portfolioId);
     if(!portfolio){
         throw new ApiError(400 , "portfolio is not found! ");
     }

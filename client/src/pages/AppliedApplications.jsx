@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useApplication } from "../context/ApplicationContext";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
+import { useRef } from "react";
 
 export default function AppliedApplications(){
     const {getApplicationOfUser , error , isLoading} = useApplication();
@@ -22,12 +23,28 @@ export default function AppliedApplications(){
             }
         }
         fetchApplicationsOfUser();
-    } , [error , user]);
+    } , [user]);
+    const modalRef = useRef();
+    const openModal = ()=>{
+        modalRef.current.showModal();
+    }
     return(
         <div className="flex flex-col items-center py-5 gap-4 bg-gray-900 min-h-screen">
             <div className="flex items-center justify-between w-full max-w-md">
                 <h3>View Application Stats!</h3>
-                <button className="btn bg-orange-500 hover:bg-orange-600">Stats</button>
+                <button onClick={openModal} className="btn bg-orange-500 hover:bg-orange-600">Stats</button>
+                <dialog ref={modalRef} className="modal">
+                    <div className="modal-box">
+                        <h3 className="font-bold text-lg">Hello!</h3>
+                        <p className="py-4">Press ESC key or click the button below to close</p>
+                        <div className="modal-action">
+                        <form method="dialog">
+                            {/* if there is a button in form, it will close the modal */}
+                            <button className="btn">Close</button>
+                        </form>
+                        </div>
+                    </div>
+                </dialog>
             </div>
             {
                 isLoading ? "Loading......." :

@@ -81,7 +81,7 @@ exports.totalApplicationsRecevied = asyncHandler(async (req , res)=>{
         [
             {
               $match: {
-                post: new mongoose.Types.ObjectId(String(jobId)),
+                job: new mongoose.Types.ObjectId(String(jobId)),
               },
             },
             {
@@ -162,19 +162,19 @@ exports.skillGapGraph = asyncHandler(async(req , res)=>{
             },
             {
               $lookup: {
-                from: "profiles",
-                localField: "profile",
+                from: "portfolios",
+                localField: "portfolio",
                 foreignField: "_id",
-                as: "profileDetails"
+                as: "portfolioDetails"
               }
             },
             {
-              $unwind: "$profileDetails"  
+              $unwind: "$portfolioDetails"  
             },
             {
               $lookup: {
-                from: "postjobs",
-                localField: "post",
+                from: "jobs",
+                localField: "job",
                 foreignField: "_id",
                 as: "jobDetails"
               }
@@ -185,11 +185,11 @@ exports.skillGapGraph = asyncHandler(async(req , res)=>{
             {
               $project: {
                 userId:"$user",
-                jobId:"$post",
-                userSkills:"$profileDetails.skills",
+                jobId:"$job",
+                userSkills:"$portfolioDetails.skills",
                 requiredSkills:"$jobDetails.requiredSkills",
                 skillGap:{
-                  $setDifference:["$jobDetails.requiredSkills" , "$profileDetails.skills"]
+                  $setDifference:["$jobDetails.requiredSkills" , "$portfolioDetails.skills"]
                 }
               }
             }

@@ -9,5 +9,7 @@ routes.route("/job/:jobId").get(applicationController.getApplicationsByJob);
 routes.route("/user/get/:userId").get(applicationController.getApplicationsOfUser);
 
 //aggregation routes
-routes.route("/application/received/:jobId").get(applicationController.totalApplicationsRecevied);
+routes.route("/received/applications/:jobId").get(applicationController.totalApplicationsRecevied);
+routes.route("/applied/applications/:userId").get(applicationController.applicationsSubmitted);
+routes.route("/skillgap/user/:applicationId").get(applicationController.skillGapGraph);
 module.exports = routes;
