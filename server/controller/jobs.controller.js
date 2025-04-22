@@ -94,3 +94,27 @@ exports.deleteJob = asyncHandler(async(req , res)=>{
     }
     return res.status(204).json()
 })
+
+//job-filter
+exports.jobsByFilter = asyncHandler(async(req,res)=>{
+    const {locationpreference , salary , jobType} = req.query;
+    let query = {};
+    if(locationpreference){
+        query.locationpreference = locationpreference;
+    }
+    else if(salary){
+        query.salary = salary;
+    }else if(jobType){
+        query.jobType = jobType;
+    }
+    const jobs = await PostJob.find(query).populate("jobType domain");
+    if(!jobs.length){
+        throw new ApiError(404 , "jobs are not found");
+    }
+    return res.status(200).json(
+        new ApiResponse("jobs are: " , jobs , 200)
+    )
+})
+
+//job-search
+exports.jobsBySearch = asyncHandler(async(req, res)=>{})

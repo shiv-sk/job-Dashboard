@@ -7,6 +7,12 @@ const orgSchema = new mongoose.Schema({
         unique:true,
         index:true,
     },
+    email:{
+        type:String,
+        required:true,
+        trim:true,
+        unique:true,
+    },
     about:{
         type:String,
         required:true,

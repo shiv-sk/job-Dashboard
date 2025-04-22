@@ -4,7 +4,7 @@ const ApiResponse = require("../utils/apiResponse");
 const asyncHandler = require("../utils/asyncHandler");
 const uploadOnCloudinary = require("../utils/cloudinary");
 exports.newOrg = asyncHandler(async (req , res)=>{
-    const {name , about , size , socialLinks , industry , user} = req.body;
+    const {name , about , size , socialLinks , industry , user , email} = req.body;
     const existOrg = await Organization.findOne({user});
     if(existOrg){
         throw new ApiError(400 , "organization already exist! ");
@@ -26,6 +26,7 @@ exports.newOrg = asyncHandler(async (req , res)=>{
         industry,
         logo:uploadMedia,
         user,
+        email
     })
 
     if(!org){

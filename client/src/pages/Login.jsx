@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 export default function Login(){
     const {loginUser , error , isLoading} = useAuth();
@@ -61,6 +62,9 @@ export default function Login(){
                         onClick={handleShowPassword}
                         >{showPassword ? "Hide" : "Show"}</button>
                         </div>
+                        <p className="text-gray-300 font-semibold">Create a new Account! 
+                            <Link to={"/register"}><span className="hover:underline hover:text-orange-700"> Register</span></Link>
+                        </p>
                         <button type="submit" 
                         className="btn bg-orange-500 hover:bg-orange-600 text-white py-2 rounded-md">Login</button>
                     </form>

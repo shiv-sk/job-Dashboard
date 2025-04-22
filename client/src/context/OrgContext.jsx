@@ -18,7 +18,7 @@ const OrgProvider = ({children})=>{
 
     useEffect(()=>{
         const getUserOrg = async()=>{
-            if(!user || !user._id){
+            if(!user || !user._id || user.role !== "Employer"){
                 return;
             }
             try {
@@ -71,7 +71,7 @@ const OrgProvider = ({children})=>{
             setIsLoading(false);
         }
     }
-    const editOrg = async(data , orgId)=>{
+    const updateOrg = async(data , orgId)=>{
         try {
             setError(null);
             setIsLoading(true);
@@ -104,7 +104,7 @@ const OrgProvider = ({children})=>{
         }
     }
     return(
-        <OrgContext.Provider value={{org , newOrg , getOrgByUser , editOrg , deleteOrg , error , isLoading}}>
+        <OrgContext.Provider value={{org , newOrg , getOrgByUser , updateOrg , deleteOrg , error , isLoading}}>
             {children}
         </OrgContext.Provider>
     )

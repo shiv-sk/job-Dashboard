@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useJob } from "../context/JobContext";
 import { Link } from "react-router-dom";
+import { FaHotel , FaMoneyBillWave , FaLocationDot , FaSuitcase } from "react-icons/fa6";
 
 export default function Home(){
     const {getAllJobs , error} = useJob();
@@ -36,7 +37,7 @@ export default function Home(){
         
     }
     return(
-        <div className="flex flex-col items-center py-5 min-h-screen">
+        <div className="flex flex-col items-center py-5 min-h-screen bg-gray-900">
             <div className="w-full max-w-md flex gap-2 mb-4">
                 <input
                 name="search" 
@@ -83,14 +84,26 @@ export default function Home(){
                 <div className="w-full md:w-1/2 flex flex-col gap-4 overflow-auto">
                     {
                         jobs && jobs.length > 0 ? jobs.map((job)=>(
-                            <div className="card card-dash bg-gray-900" key={job._id}>
+                            <div className="card card-dash bg-gray-900 shadow-xl" key={job._id}>
                                 <div className="card-body">
                                     <h2 className="card-title">{job.title || "jobTitle"}</h2>
                                     <div className="flex flex-wrap justify-between p-3 rounded-lg gap-4 items-center">
-                                        <span className="text-sm">{job.salary || "Salary"}</span>
-                                        <span className="text-sm">{job.jobtype || "JobType"}</span>
-                                        <span className="text-sm">{job.location || "JobLocation"}</span>
-                                        <span className="text-sm">{job.locationpreference || "locationPreference"}</span>
+                                        <div className="flex flex-wrap items-center gap-1">
+                                            <FaMoneyBillWave className="text-sm"/>
+                                            <span className="text-sm">{job.salary || "Salary"}/month</span>
+                                        </div>
+                                        <div className="flex flex-wrap items-center gap-1">
+                                            <FaSuitcase className="text-sm"/>
+                                            <span className="text-sm">{job.jobtype || "JobType"}</span>
+                                        </div>
+                                        <div className="flex flex-wrap items-center gap-1">
+                                            <FaLocationDot className="text-sm" />
+                                            <span className="text-sm">{job.location || "JobLocation"}</span>
+                                        </div>
+                                        <div className="flex flex-wrap items-center gap-1">
+                                            <FaHotel className="text-sm"/>
+                                            <span className="text-sm">{job.locationpreference || "locationPreference"}</span>
+                                        </div>
                                     </div>
                                     <div className="card-actions justify-end">
                                     <Link to={`/job/${job._id}`}><button className="btn bg-orange-500">More</button></Link>

@@ -6,6 +6,9 @@ const ApplicationContext = createContext({
     getApplicationOfUser:()=>{},
     getApplicationsByJob:()=>{},
     deleteApplication:()=>{},
+    getSkillGapAnalysis:()=>{},
+    totalApplicationsAppliedByUser:()=>{},
+    totalApplicationsWeekwise:()=>{},
 })
 const useApplication = ()=>useContext(ApplicationContext);
 const ApplicationProvider = ({children})=>{
@@ -76,9 +79,57 @@ const ApplicationProvider = ({children})=>{
             setIsLoading(false);
         }
     }
+    const getSkillGapAnalysis = async(applicationId)=>{
+        try {
+            setError(null);
+            setIsLoading(true);
+            const response = await getAndDeleteReq(`${baseUrl}/application/skillgap/user/${applicationId}` , "get");
+            // console.log("response from AuthContext! " , response?.data);
+            return { success: true, data: response?.data };
+        } catch (error) {
+            console.log("error from Application Context! " , error);
+            const errorMessage = error.response?.data?.message || "Skill gap is not found try again.";
+            setError(errorMessage);
+            return { success: false, error: errorMessage || "skill gap analysis failed!." };
+        }finally{
+            setIsLoading(false);
+        }
+    }
+    const totalApplicationsAppliedByUser = async(userId)=>{
+        try {
+            setError(null);
+            setIsLoading(true);
+            const response = await getAndDeleteReq(`${baseUrl}/application/applied/applications/${userId}` , "get");
+            // console.log("response from AuthContext! " , response?.data);
+            return { success: true, data: response?.data };
+        } catch (error) {
+            console.log("error from Application Context! " , error);
+            const errorMessage = error.response?.data?.message || "Applications Applied By User not found try again.";
+            setError(errorMessage);
+            return { success: false, error: errorMessage || "Applied Applications fetch failed!." };
+        }finally{
+            setIsLoading(false);
+        }
+    }
+    const totalApplicationsWeekwise = async(jobId)=>{
+        try {
+            setError(null);
+            setIsLoading(true);
+            const response = await getAndDeleteReq(`${baseUrl}/application/received/applications/${jobId}` , "get");
+            // console.log("response from AuthContext! " , response?.data);
+            return { success: true, data: response?.data };
+        } catch (error) {
+            console.log("error from Application Context! " , error);
+            const errorMessage = error.response?.data?.message || "Week wise applications not found.";
+            setError(errorMessage);
+            return { success: false, error: errorMessage || "fetching applications week wise failed!." };
+        }finally{
+            setIsLoading(false);
+        }
+    }
     return(
         <ApplicationContext.Provider value={{newApplication , deleteApplication , getApplicationOfUser , 
-        getApplicationsByJob, error , isLoading}}>
+        getApplicationsByJob, getSkillGapAnalysis, totalApplicationsAppliedByUser, totalApplicationsWeekwise,  error , isLoading}}>
             {children}
         </ApplicationContext.Provider>
     )

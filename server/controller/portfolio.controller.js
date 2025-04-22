@@ -111,3 +111,19 @@ exports.deleteProtfolio = asyncHandler(async(req , res)=>{
     }
     return res.status(204).json()
 })
+
+//get a profile score!
+exports.profileScore = asyncHandler(async(req , res)=>{
+    const {skills , requiredSkills} = req.body;
+    const normalizedSkills = skills.map((skill)=>(skill.toLowerCase()));
+    const normalizedrequiredSkills = requiredSkills.map((skill)=>(skill.toLowerCase()));
+    console.log(normalizedSkills);
+    
+    const matchingSkills = normalizedSkills.filter((skill)=>(normalizedrequiredSkills.includes(skill)));
+    
+    const totalProfileScore = Math.floor((matchingSkills.length / requiredSkills.length)*100);
+    const missingSkills = normalizedrequiredSkills.filter(skill => !normalizedSkills.includes(skill))
+    return res.status(200).json(
+        new ApiResponse(200 , "the total ProfileScore is! " , {totalProfileScore , matchingSkills , missingSkills})
+    )
+})

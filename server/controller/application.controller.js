@@ -3,6 +3,7 @@ const ApiError = require("../utils/apiError");
 const ApiResponse = require("../utils/apiResponse");
 const asyncHandler = require("../utils/asyncHandler");
 const mongoose = require("mongoose");
+const confirmationMail = require("../utils/sendMail")
 
 exports.newApplication = asyncHandler(async(req , res)=>{
     const {userId , portfolioId , jobId} = req.body;
@@ -20,6 +21,23 @@ exports.newApplication = asyncHandler(async(req , res)=>{
     if(!application){
         throw new ApiError(500 , "application is not created! ");
     }
+    const populateApplication = await Application.findById(application._id).populate([{path:"user" , select:"email name"} , 
+        {path:"job" , select:"title" , populate:{path:"org" , select:"name email"}}]);
+    // console.log(userEmail , userName , organizationMail , organizationName , JobTitle);
+    let userEmail;
+    let userName;
+    let organizationMail;
+    let organizationName;
+    let JobTitle;
+    if(populateApplication){
+        userEmail = populateApplication.user.email;
+        userName = populateApplication.user.name;
+        organizationMail = populateApplication.job.org.email;
+        organizationName = populateApplication.job.org.name;
+        JobTitle = populateApplication.job.title;
+        console.log(userEmail , userName , organizationMail , organizationName , JobTitle);
+    }
+    const sentMail = await confirmationMail.sendConfirmationMail(userEmail , organizationMail , JobTitle , userName , organizationName);
     return res.status(201).json(
         new ApiResponse(201 , "created application is! " , application)
     )
@@ -71,7 +89,7 @@ exports.deleteApplication = asyncHandler(async(req, res)=>{
 })
 
 //aggregation-pipeline
-//total applications received on month wise
+//total applications received on week wise
 exports.totalApplicationsRecevied = asyncHandler(async (req , res)=>{
     const {jobId} = req.params;
     if(!jobId){
@@ -103,13 +121,13 @@ exports.totalApplicationsRecevied = asyncHandler(async (req , res)=>{
             }
         ]
     )
-    if(!totalApplications.length){
+    if(totalApplications.length === 0){
         return res.status(200).json(
-            new ApiResponse("there are no applicates are submited to this post! " , {} , 200)
+            new ApiResponse(200, "applications are not found! " , {})
         )
     }
     return res.status(200).json(
-        new ApiResponse("the applications are! " , totalApplications , 200)
+        new ApiResponse(200 , "total Applications are! " , totalApplications)
     )
 })
 
@@ -139,11 +157,11 @@ exports.applicationsSubmitted = asyncHandler(async(req , res)=>{
     )
     if(!applicationSubmitted.length){
         return res.status(200).json(
-            new ApiResponse("there are no applications submitted for this user! " ,{} , 200)
+            new ApiResponse(200 , "there are no applications for user! " , {})
         )
     }
     return res.status(200).json(
-        new ApiResponse("the submitted applications are! " , applicationSubmitted , 200)
+        new ApiResponse(200 , "the submitted applications are! " , applicationSubmitted)
     )
 })
 
@@ -195,12 +213,12 @@ exports.skillGapGraph = asyncHandler(async(req , res)=>{
             }
         ]
     )
-    if(!skillGap.length){
+    if(skillGap.length === 0){
         return res.status(200).json(
-            new ApiResponse("there are no data to compare Skills! " , {} , 200)
+            new ApiResponse(200 , "there are no data to compare Skills! ", {})
         )
     }
     return res.status(200).json(
-        new ApiResponse("skill gap between user and job! " , skillGap , 200)
+        new ApiResponse(200 , "skill gap between user and job! " , skillGap)
     )
 })

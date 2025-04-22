@@ -8,6 +8,7 @@ const PortfolioContext = createContext({
     getPortfolio:()=>{},
     editPortfolio:()=>{},
     deletePortfolio:()=>{},
+    portfolioScore:()=>{},
 })
 const usePortfolio = ()=>useContext(PortfolioContext);
 const PortfolioProvider = ({children})=>{
@@ -18,7 +19,7 @@ const PortfolioProvider = ({children})=>{
 
     useEffect(()=>{
         const fetchPortfolio = async()=>{
-            if(!user || !user._id){
+            if(!user || !user._id || user.role !== "JobSeeker"){
                 return;
             }
             const response = await getPortfolioByUser(user?._id);
@@ -84,7 +85,7 @@ const PortfolioProvider = ({children})=>{
         try {
             setError(null);
             setIsLoading(true);
-            const response = await postAndPatchReq(`${baseUrl}/portfolio/user/myportfolio/${userId}` , "get");
+            const response = await getAndDeleteReq(`${baseUrl}/portfolio/user/myportfolio/${userId}` , "get");
             // console.log("response from AuthContext! " , response?.data);
             return { success: true, data: response?.data };
         } catch (error) {
@@ -100,7 +101,7 @@ const PortfolioProvider = ({children})=>{
         try {
             setError(null);
             setIsLoading(true);
-            const response = await postAndPatchReq(`${baseUrl}/portfolio/${portfolioId}` , "get");
+            const response = await getAndDeleteReq(`${baseUrl}/portfolio/${portfolioId}` , "get");
             // console.log("response from AuthContext! " , response?.data);
             return { success: true, data: response?.data };
         } catch (error) {
@@ -112,9 +113,25 @@ const PortfolioProvider = ({children})=>{
             setIsLoading(false);
         }
     }
+    const portfolioScore = async(data)=>{
+        try {
+            setError(null);
+            setIsLoading(true);
+            const response = await postAndPatchReq(`${baseUrl}/portfolio/user/portfolio/score` , "post" , data);
+            // console.log("the response AuhtContext! " , response);
+            return { success: true, data: response?.data };
+        } catch (error) {
+            console.log("error from portfolioScore! " , error);
+            const errorMessage = error.response?.data?.message || "portfolio failed. Please try again.";
+            setError(errorMessage);
+            return { success: false, error: errorMessage || "portfolio failed." }; 
+        }finally{
+            setIsLoading(false);
+        }
+    }
     return(
         <PortfolioContext.Provider value={{newPortfolio , getPortfolio , deletePortfolio , editPortfolio , 
-        getPortfolioByUser , error , isLoading , portfolio}}>
+        getPortfolioByUser , portfolioScore , error , isLoading , portfolio}}>
             {children}
         </PortfolioContext.Provider>
     )

@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import { useSaveJob } from "../context/SaveJobContext";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function SavedJobs(){
     const [userSavedJobs , setUserSavedJobs] = useState([]);
     const {user} = useAuth();
-    const {getSavedJobByUser , error , isLoading} = useSaveJob();
+    const {getSavedJobByUser , isLoading} = useSaveJob();
     useEffect(()=>{
         const fetchSavedJobs = async()=>{
             if(!user || !user._id){
@@ -18,11 +19,12 @@ export default function SavedJobs(){
                 setUserSavedJobs(response?.data || []);
             }
             else{
-                throw new Error(error);
+                console.log("Savedjob page error!" , response.error);
+                toast.error(response.error , { toastId: `savedjob-error-${user._id}` });
             }
         }
         fetchSavedJobs();
-    } , [user , error])
+    } , [user])
     return(
         <div className="w-full flex flex-col items-center justify-center gap-4 py-5 bg-gray-900 min-h-screen">
             {
@@ -43,7 +45,9 @@ export default function SavedJobs(){
                             </div>
                         </div>
                     </div>
-                )) : ""
+                )) : (
+                        <p>Looks like you haven’t saved any jobs yet.</p>
+                    )
             }
         </div>
     )

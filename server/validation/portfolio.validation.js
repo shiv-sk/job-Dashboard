@@ -82,3 +82,12 @@ exports.updateProtfolioSchema = Joi.object({
     }).optional(),
     userId:Joi.string().trim().hex().length(24),
 }).min(1);
+
+exports.portfolioScore = Joi.object({
+    skills:Joi.array().items(
+        Joi.string().min(1).required()
+    ),
+    requiredSkills:Joi.array().items(
+        Joi.string().min(1).required()
+    ),
+})

@@ -1,6 +1,7 @@
 const Joi = require("joi");
 exports.newOrgSchema = Joi.object({
     name:Joi.string().trim().required(),
+    email:Joi.string().email().trim().required(),
     about:Joi.string().trim().max(500).required(),
     size:Joi.string().trim().required(),
     industry:Joi.string().lowercase().trim().required(),
@@ -13,7 +14,8 @@ exports.newOrgSchema = Joi.object({
     ).required(),
 })
 exports.updateOrgSchema = Joi.object({
-    name:Joi.string().trim().required(),
+    name:Joi.string().trim(),
+    email:Joi.string().email().trim(),
     about:Joi.string().trim().max(500),
     size:Joi.string().trim(),
     industry:Joi.string().lowercase().trim(),

@@ -1,12 +1,11 @@
 const nodemailer = require("nodemailer");
-const { fetchFile } = require("./fecthFile");
-exports.sendConfirmationMail = async(userEmail , organizationMail , jobTitle , userResume)=>{
+exports.sendConfirmationMail = async(userEmail , organizationMail , jobTitle , userName , orgName)=>{
     console.log("the username and password from env: " , process.env.USER);
     const transport = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user:process.env.USER, // your Gmail email
-            pass:process.env.PASS // the 16-character app password generated
+            user:process.env.USER,
+            pass:process.env.PASS
         }
     });
     
@@ -14,48 +13,45 @@ exports.sendConfirmationMail = async(userEmail , organizationMail , jobTitle , u
         from:"natsudragneel771990@gmail.com",
         to:userEmail,
         subject:"Application is submitted",
-        text:`Dear [Job Seeker's Name],
-        Thank you for applying to the ${jobTitle} position at [Company Name]. We have successfully received your application.
+        text:`Dear ${userName},
+        Thank you for applying to the ${jobTitle} position at ${orgName}. We have successfully received your application.
         Here are the details of your application:
         - Position: ${jobTitle}
-        - Company: [Company Name]
-        - Submitted On: [Submission Date]
-        - Job Location: [Job Location]
+        - Company: ${orgName}
 
         Our hiring team is reviewing your profile and will contact you shortly if we feel you are a good match for the role. In the meantime, you can visit your profile to track the status of your application.
 
-        If you have any questions or need to update your information, feel free to contact us at [natsudragneel771990@gmail.com].
+        If you have any questions or need to update your information, feel free to contact us at natsudragneel771990@gmail.com.
 
         Thank you again for your interest in joining our team, and we wish you the best of luck in the hiring process!
 
         Best regards,  
-        [Job-DashBoard]  
-        [Company Website]  
-        [natsudragneel771990@gmail.com]`,
+        Job-DashBoard  
+        Job-DashBoard.com  
+        natsudragneel771990@gmail.com`,
     };
     const organizationMailOptions = {
         from:"natsudragneel771990@gmail.com",
         to:organizationMail,
         subject:`new application is received `,
-        text:`Dear [Employer's Name],
+        text:`Dear ${orgName},
 
-        We wanted to inform you that a new application has been submitted for your job posting: [Job Title].
+        We wanted to inform you that a new application has been submitted for your job posting: ${jobTitle}.
 
         Applicant details:
-        - Name: [Job Seeker's Name]
-        - Email: ${userEmail}    
-        - Applied On: [Submission Date]
+        - Name: ${userName}
+        - Email: ${userEmail}
         - Resume: you will find in application
 
-        You can review the full application on the employer dashboard by following this link: [Dashboard Link].
+        You can review the full application on the employer dashboard.
 
-        If you have any questions or need assistance reviewing applications, please feel free to contact us at [natsudragneel771990@gmail.com].
+        If you have any questions or need assistance reviewing applications, please feel free to contact us at natsudragneel771990@gmail.com.
 
-        Thank you for using [Your Platform Name] to find your next great hire.
+        Thank you for using Job-DashBoard to find your next great hire.
 
         Best regards,  
         Job-DashBoard  
-        [Company Website]  
+        Job-DashBoard.com  
         natsudragneel771990@gmail.com`,
     };
 

@@ -9,7 +9,7 @@ const SaveJobContext = createContext({
 })
 const useSaveJob = ()=>useContext(SaveJobContext);
 const SaveJobProvider = ({children})=>{
-    const [error , setError] = useState(false);
+    const [error , setError] = useState(null);
     const [isLoading , setIsLoading] = useState(false);
 
     const newSaveJob = async(data)=>{
@@ -20,10 +20,10 @@ const SaveJobProvider = ({children})=>{
             // console.log("the response AuhtContext! " , response);
             return { success: true, data: response?.data };
         } catch (error) {
-            console.log("error from AuthContext! " , error);
-            const errorMessage = error.response?.data?.message || "Registration failed. Please try again.";
+            console.log("error from SavejobContext! " , error);
+            const errorMessage = error.response?.data?.message || "Job is not saved. Please try again.";
             setError(errorMessage);
-            return { success: false, error: errorMessage || "Registration failed." }; 
+            return { success: false, error: errorMessage || "Savejob failed." }; 
         }finally{
             setIsLoading(false);
         }
@@ -36,10 +36,9 @@ const SaveJobProvider = ({children})=>{
             // console.log("response from AuthContext! " , response?.data);
             return { success: true, data: response?.data };
         } catch (error) {
-            console.log("error from AuthContext! " , error);
-            const errorMessage = error.response?.data?.message || "logout failed. Please try again.";
-            setError(errorMessage);
-            return { success: false, error: errorMessage || "logout failed." };
+            console.log("error from SavejobContext! " , error);
+            const errorMessage = error?.response?.data?.message || "savedjob failed. Please try again.";
+            return { success: false, error: errorMessage || "savedjob failed." };
         }finally{
             setIsLoading(false);
         }
@@ -52,10 +51,10 @@ const SaveJobProvider = ({children})=>{
             // console.log("response from AuthContext! " , response?.data);
             return { success: true, data: response?.data };
         } catch (error) {
-            console.log("error from AuthContext! " , error);
-            const errorMessage = error.response?.data?.message || "login failed. Please try again.";
+            console.log("error from SavejobContext! " , error);
+            const errorMessage = error.response?.data?.message || "delete Savedjob failed. Please try again.";
             setError(errorMessage);
-            return { success: false, error: errorMessage || "login failed." };
+            return { success: false, error: errorMessage || "delete Savedjob failed." };
         }finally{
             setIsLoading(false);
         }
